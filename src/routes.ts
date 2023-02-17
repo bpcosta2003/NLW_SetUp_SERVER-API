@@ -31,6 +31,76 @@ export async function main(app: FastifyInstance) {
     });
   });
 
+  app.patch("/delete/:id", async (request) => {
+    const deleteHabitId = z.object({
+      id: z.string(),
+    });
+
+    const {id} = deleteHabitId.parse(request.params);
+    const today = dayjs().startOf("day").toDate();
+    const weekDay = dayjs(today).get("day");
+
+    let day = await prisma.day.findUnique({
+      where: {
+        date: today,
+      },
+    });
+
+    if (!day) {
+      day = await prisma.day.create({
+        data: {
+          date: today,
+        },
+      });
+    }
+    
+    
+    await prisma.habitWeekDays.delete({
+      where:{
+        week_day_habit_id: {
+          habit_id:id,
+          week_day: weekDay
+        }
+        
+      }
+    })
+
+    const dayHabit = await prisma.dayHabit.findUnique({
+      where: {
+        day_id_habit_id: {
+          day_id: day.id,
+          habit_id: id,
+        },
+      },
+    });
+
+    if (dayHabit) {
+      await prisma.dayHabit.delete({
+        where: {
+          id: dayHabit.id,
+        },
+      });
+    } else {
+      await prisma.dayHabit.create({
+        data: {
+          day_id: day.id,
+          habit_id: id,
+          
+        },
+      });
+      await prisma.dayHabit.delete({
+        where:{
+          day_id_habit_id: {
+            day_id: day.id,
+            habit_id: id
+          }
+        }
+      })
+    }
+      
+
+  });
+
   app.get("/day", async (request) => {
     const getDayParams = z.object({
       date: z.coerce.date(),
@@ -54,6 +124,7 @@ export async function main(app: FastifyInstance) {
       },
     });
 
+    
     const day = await prisma.day.findUnique({
       where: {
         date: parsedDate.toDate(),

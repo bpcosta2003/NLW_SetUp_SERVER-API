@@ -27,21 +27,21 @@ model Day {
 }
 
 model DayHabit {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
-  day_id   String @db.ObjectId
-  habit_id String @db.ObjectId
-  day      Day    @relation(fields: [day_id], references: [id])
-  habit    Habit  @relation(fields: [habit_id], references: [id])
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  day_id   String? @db.ObjectId
+  habit_id String? @db.ObjectId
+  day      Day?    @relation(fields: [day_id], references: [id], onDelete: Cascade)
+  habit    Habit?  @relation(fields: [habit_id], references: [id], onDelete: Cascade)
 
   @@unique([day_id, habit_id])
   @@map("day_habits")
 }
 
 model HabitWeekDays {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
-  habit_id String @db.ObjectId
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  habit_id String? @db.ObjectId
   week_day Int
-  habit    Habit  @relation(fields: [habit_id], references: [id])
+  habit    Habit?  @relation(fields: [habit_id], references: [id], onDelete: Cascade)
 
   @@unique([week_day, habit_id])
   @@map("habit_week_days")
