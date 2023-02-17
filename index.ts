@@ -1,8 +1,8 @@
 import cors from "@fastify/cors";
 import Fastify from "fastify";
 import {main} from "./src/routes";
-require("dotenv").config();
-require("./src/server");
+// require("dotenv").config();
+// require("./src/server");
 
 const app = Fastify();
 
