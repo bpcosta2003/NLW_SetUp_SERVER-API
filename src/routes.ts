@@ -133,12 +133,12 @@ export async function main(app: FastifyInstance) {
 
     const completedHabits = day?.dayHabits.map((dayHabit) => {
       return dayHabit.habit_id;
-    }) ?? ["a"];
-
-    console.log(completedHabits);
+    }) ?? [];
     
-    return completedHabits
-    
+    return {
+      possibleHabits,
+      completedHabits,
+    };
 
   });
 
