@@ -137,14 +137,12 @@ export async function main(app: FastifyInstance) {
 
     console.log(completedHabits);
     
-    return {
-      possibleHabits,
-      completedHabits,
-    };
+    return completedHabits
+    
 
   });
 
-  app.put("/habits/:id/toggle", async (request) => {
+  app.patch("/habits/:id/toggle", async (request) => {
     const toggleHabitParams = z.object({
       id: z.string(),
     });
