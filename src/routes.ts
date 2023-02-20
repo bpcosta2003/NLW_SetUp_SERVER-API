@@ -29,6 +29,7 @@ export async function main(app: FastifyInstance) {
         },
       },
     });
+
   });
 
   app.patch("/delete/:id", async (request) => {
@@ -95,6 +96,7 @@ export async function main(app: FastifyInstance) {
         },
       });
     }
+
   });
 
   app.get("/day", async (request) => {
@@ -134,11 +136,12 @@ export async function main(app: FastifyInstance) {
     }) ?? ["a"];
 
     console.log(completedHabits);
-
+    
     return {
       possibleHabits,
       completedHabits,
     };
+
   });
 
   app.patch("/habits/:id/toggle", async (request) => {
