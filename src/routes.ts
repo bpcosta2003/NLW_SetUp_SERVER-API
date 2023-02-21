@@ -99,7 +99,7 @@ export async function main(app: FastifyInstance) {
 
   });
 
-  app.get("/day", async (request) => {
+  app.get("/day", async (request, response) => {
     const getDayParams = z.object({
       date: z.coerce.date(),
     });
@@ -135,10 +135,13 @@ export async function main(app: FastifyInstance) {
       return dayHabit.habit_id;
     }) ?? [];
     
-    return {
+    response.header('Content-Type', 'application/json')
+
+    response.send(JSON.stringify({
       possibleHabits,
       completedHabits,
-    };
+    }))
+
 
   });
 
@@ -266,4 +269,5 @@ export async function main(app: FastifyInstance) {
 
     return amount;
   }
+
 }

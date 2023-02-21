@@ -5,7 +5,6 @@ import {main} from "./src/routes";
 // require("./src/server");
 
 const app = Fastify();
-
 app.register(cors);
 app.register(main);
 
