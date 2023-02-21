@@ -135,12 +135,12 @@ export async function main(app: FastifyInstance) {
       return dayHabit.habit_id;
     }) ?? [];
     
-    response.header('Content-Type', 'application/json')
 
-    response.send(JSON.stringify({
+    return ({
       possibleHabits,
       completedHabits,
-    }))
+    })
+    
 
 
   });
