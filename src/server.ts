@@ -4,7 +4,7 @@ const MONGODB_URI =
   process.env.MONGODB_USER +
   ":" +
   process.env.MONGODB_PASSWORD +
-  "@habitstracker.vu0y9rb.mongodb.net/" +
+  "@habitstracker.eyhbfkj.mongodb.net/" +
   process.env.MONGODB_DATABASE +
   "?retryWrites=true&w=majority";
 
